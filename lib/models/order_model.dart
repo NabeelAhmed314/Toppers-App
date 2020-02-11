@@ -15,7 +15,7 @@ class OrderModel extends Model {
             id: json['id'],
             name: json['name'],
             customerId: json['customer_id'].toString(),
-            address: json['aaddress'].toString(),
+            address: json['address'].toString(),
             totatlPrice: json['total_price']);
 
   @override

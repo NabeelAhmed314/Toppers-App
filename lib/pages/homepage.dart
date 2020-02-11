@@ -40,10 +40,15 @@ class _HomePageState extends State<HomePage> {
                 shape: RoundedRectangleBorder(
                   borderRadius: new BorderRadius.circular(28.0),
                 ),
-                onPressed: () {                  Navigator.push(context,MaterialPageRoute(builder: (context)=>Signin()));},
+                onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => Signin()));
+                },
                 child: Text("SIGN IN",
-                    style:
-                        TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.w400)),
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 18,
+                        fontWeight: FontWeight.w400)),
               ),
             ),
             SizedBox(
@@ -58,11 +63,14 @@ class _HomePageState extends State<HomePage> {
                 ),
                 color: Color(0xffCE862A),
                 onPressed: () {
-                  Navigator.push(context,MaterialPageRoute(builder: (context)=>SignUp()));
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => SignUp()));
                 },
                 child: Text("SIGN UP",
-                    style:
-                        TextStyle(fontSize: 18,color: Colors.white, fontWeight: FontWeight.w400)),
+                    style: TextStyle(
+                        fontSize: 18,
+                        color: Colors.white,
+                        fontWeight: FontWeight.w400)),
               ),
             ),
             SizedBox(
@@ -75,11 +83,17 @@ class _HomePageState extends State<HomePage> {
                 shape: RoundedRectangleBorder(
                   borderRadius: new BorderRadius.circular(28.0),
                 ),
-                color:  Color(0xffbc282b),
-                onPressed: () {Navigator.push(context, MaterialPageRoute(builder: (context)=>First()));},
+                color: Color(0xffbc282b),
+                onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => First()));
+                },
                 child: Text(
                   "Proceed As A Guest",
-                  style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.w400),
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 18,
+                      fontWeight: FontWeight.w400),
                 ),
               ),
             )

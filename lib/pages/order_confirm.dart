@@ -154,15 +154,30 @@ class _ConfirmOrderState extends State<ConfirmOrder> {
                         child: RaisedButton(
                           color: Color(0xffcdaa44),
                           onPressed: () {
+                            for (var orderItem in CartList.orderItems) {
+                              if (orderItem.productId ==
+                                  widget.product.id.toString()) {
+                                orderItem.quantity = value;
+                                Navigator.pop(context);
+                                return ;
+                              }
+                              else{
+                                continue;
+                              }
+                            }
                             OrderItemModel orderItem = new OrderItemModel();
                             orderItem.productId = widget.product.id.toString();
                             orderItem.quantity = value;
-                            Cart.orderItems.add(orderItem);
-
-                          for (var orderItem in Cart.orderItems) {
-                            print(orderItem.productId.toString());
-                          }
-                            // Navigator.pop(context);
+                            orderItem.name = widget.product.name;
+                            orderItem.restaurantId = widget.product.restaurantId;
+                            orderItem.categoryId = widget.product.categoryId;
+                            orderItem.unit = snapshot.data[i].name;
+                            orderItem.serving = widget.product.serving;
+                            orderItem.unitPrice = widget.product.unitPrice;
+                            orderItem.image = widget.product.image;
+                            orderItem.weight = widget.product.quantity;
+                            CartList.orderItems.add(orderItem);
+                            Navigator.pop(context);
                           },
                           child: Text("ADD TO MY BASKET",
                               style: TextStyle(
