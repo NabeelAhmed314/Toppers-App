@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:toppers_pakistan/drawer/account/order_history.dart';
-
+import 'package:toppers_pakistan/cart/place-order.dart';
 
 class PaymentMethod extends StatefulWidget {
   @override
@@ -8,95 +7,106 @@ class PaymentMethod extends StatefulWidget {
 }
 
 class _PaymentMethodState extends State<PaymentMethod> {
+  int selectedRadio=1;
 
-
-
-
-  void _placeorder() {
-    showDialog(
-        context: context,
-        builder: (BuildContext contex) {
-          return AlertDialog(
-            title: new Text("Order Placed",style: TextStyle(fontSize: 18,fontWeight: FontWeight.w600),),
-            content: Text("Your order has been placed successfully.",style: TextStyle(fontSize: 18,),),
-            actions: <Widget>[
-              // usually buttons at the bottom of the dialog
-              FlatButton(
-                child: new Text("OK",style: TextStyle(fontSize: 18,color: Colors.black,fontWeight: FontWeight.w600),),
-                onPressed: () {
-   Navigator.push(context,MaterialPageRoute(builder: (context)=>OrderHistory()));
-                },
-              ),
-            ],
-          );
-        });
+  setSelectedRadio(int val) {
+    setState(() {
+      selectedRadio = val;
+    });
+    print(selectedRadio);
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(appBar: AppBar(title: Text("Place Order"),centerTitle: true,),
-    body: ListView(padding: EdgeInsets.fromLTRB(10, 20, 10, 20), children: <Widget>[
-      
-
-CircleAvatar(backgroundColor: Colors.yellow,minRadius: 80,),
-SizedBox(height: 15,),
-Container(decoration: BoxDecoration(borderRadius: BorderRadius.circular(28),color:   Color(0xffCE862A),
-),child: Center(child: Padding(
-  padding: const EdgeInsets.all(8.0),
-  child:   Text("Delivery Time",style: TextStyle(color: Colors.white,fontSize: 22,fontWeight: FontWeight.w500),),
-)),),
-
-SizedBox(height: 15,),
-
-Container(decoration: BoxDecoration(borderRadius: BorderRadius.circular(14),color:  Color(0xffbc282b),
-),child: Padding(
-  padding: const EdgeInsets.all(8.0),
-  child:   Text("Your order will be delivered tommorrow between 12:00 pm to 04:00 pm .",style: TextStyle(color: Colors.white,fontSize: 20,fontWeight: FontWeight.w500),),
-)),
-
-SizedBox(height: 15,),
-
-
-Container(decoration: BoxDecoration(border: Border.all(width: 1)),
-        child: Column(children: <Widget>[
-ListTile(
-  leading: Text("data"),
-  trailing: Text("data"),
-),
-Divider(color: Colors.black,height: 0,),
-ListTile(
-  leading: Text("data"),
-  trailing: Text("data"),
-),Divider(color: Colors.black,height: 0,),ListTile(
-  leading: Text("data"),
-  trailing: Text("data"),
-),Divider(color: Colors.black,height: 0,),ListTile(
-  leading: Text("data"),
-  trailing: Text("data"),
-),Divider(color: Colors.black,height: 0,),ListTile(
-  leading: Text("data"),
-  trailing: Text("data"),
-)
-        ],),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Payment Method'),
       ),
-
-      SizedBox(height: 10,),
-        Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 12),
-                    child: ButtonTheme(
-                      minWidth: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.height / 15,
-                      child: RaisedButton(
-                        color:    Color(0xffCE862A),
-                        onPressed: () {_placeorder();},
-                        child: Text("Place Order",
-                            style: TextStyle(
-                                fontSize: 18, fontWeight: FontWeight.w400)),
-                      ),
-                    ),
-                  )
-
-
-    ],));
+      bottomNavigationBar: BottomAppBar(
+        elevation: 0,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 2),
+          child: ButtonTheme(
+            minWidth: MediaQuery.of(context).size.width / 1.1,
+            height: MediaQuery.of(context).size.height / 15,
+            child: RaisedButton(
+              color: Color(0xffcdaa44),
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => PlaceOrder()));
+              },
+              child: Text("Proceed",
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.w400)),
+            ),
+          ),
+        ),
+      ),
+      body: ListView(
+        children: <Widget>[
+          Column(
+            children: <Widget>[
+              Divider(
+                color: Colors.black,
+              ),
+              ListTile(
+                leading: Radio(
+                  activeColor: Colors.black,
+                  value: 1,
+                  groupValue: selectedRadio,
+                  onChanged: (val) {
+                    setSelectedRadio(val);
+                  },
+                ),
+                title: Text("Cash on Delivery"),
+              ),
+              Divider(
+                color: Colors.black,
+              ),
+            ],
+          ),
+          Column(
+            children: <Widget>[
+              Divider(
+                color: Colors.black,
+              ),
+              ListTile(
+                leading: Radio(
+                  activeColor: Colors.black,
+                  value: 2,
+                  groupValue: selectedRadio,
+                  onChanged: (val) {},
+                ),
+                subtitle: Text("Comming Soon!"),
+                title: Text("Easy Paisa"),
+              ),
+              Divider(
+                color: Colors.black,
+              ),
+            ],
+          ),
+          Column(
+            children: <Widget>[
+              Divider(
+                color: Colors.black,
+              ),
+              ListTile(
+                leading: Radio(
+                  activeColor: Colors.black,
+                  value: 3,
+                  groupValue: selectedRadio,
+                  onChanged: (val) {
+                  },
+                ),
+                subtitle: Text("Comming Soon!"),
+                title: Text("MobiCash"),
+              ),
+              Divider(
+                color: Colors.black,
+              ),
+            ],
+          )
+        ],
+      ),
+    );
   }
 }

@@ -26,7 +26,6 @@ class _AddAddressState extends State<AddAddress> {
     _service.insert(addressModel);
 
     Navigator.pop(context);
-
   }
 
   TextEditingController descriptionController = new TextEditingController();
@@ -97,6 +96,7 @@ class _AddAddressState extends State<AddAddress> {
               height: 10,
             ),
             TextFormField(
+              keyboardType: TextInputType.number,
               validator: (value) {
                 return value.isEmpty ? "Please Enter Mobile No." : null;
               },

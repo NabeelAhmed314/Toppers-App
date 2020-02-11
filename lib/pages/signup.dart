@@ -110,7 +110,7 @@ class _SignUpState extends State<SignUp> {
                 controller: nameController,
                 style: TextStyle(color: Colors.white),
                 decoration: new InputDecoration(
-                  contentPadding: EdgeInsets.only(left: 20, top: 15),
+                  // contentPadding: EdgeInsets.only(left: 20, top: 15),
                   focusedBorder: new OutlineInputBorder(
                     borderSide: BorderSide(
                       color: Color(0xff66666),
@@ -185,6 +185,7 @@ class _SignUpState extends State<SignUp> {
                 color: Color(0xff666666),
               ),
               child: TextFormField(
+                keyboardType: TextInputType.number,
                 validator: (value) {
                   return value.isEmpty ? "Please Enter phone" : null;
                 },
@@ -223,6 +224,7 @@ class _SignUpState extends State<SignUp> {
                 color: Color(0xff666666),
               ),
               child: TextFormField(
+                obscureText: true,
                 validator: (value) {
                   return value.isEmpty ? "Please Enter Password" : null;
                 },
@@ -261,6 +263,7 @@ class _SignUpState extends State<SignUp> {
                 color: Color(0xff666666),
               ),
               child: TextFormField(
+                obscureText: true,
                 validator: (value) {
                   return value.isEmpty ? "Please Retype Password" : null;
                 },

@@ -131,13 +131,13 @@ class _SigninState extends State<Signin> {
                 color: Color(0xff666666),
               ),
               child: TextFormField(
+                obscureText: true,
                 validator: (value) {
                   return value.isEmpty ? "Please Enter password" : null;
                 },
                 controller: passwordController,
                 style: TextStyle(color: Colors.white),
                 decoration: new InputDecoration(
-                  contentPadding: EdgeInsets.only(left: 20, top: 15),
                   focusedBorder: new OutlineInputBorder(
                     borderSide: BorderSide(
                       color: Color(0xff66666),
