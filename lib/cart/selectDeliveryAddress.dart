@@ -6,6 +6,7 @@ import 'package:toppers_pakistan/drawer/account/address.dart';
 import 'package:toppers_pakistan/models/address_model.dart';
 import 'package:toppers_pakistan/services/addresses_service.dart';
 import 'package:toppers_pakistan/simple-future-builder.dart';
+import 'package:date_format/date_format.dart';
 
 class SelectDeliveryAddress extends StatefulWidget {
   @override
@@ -15,6 +16,38 @@ class SelectDeliveryAddress extends StatefulWidget {
 class _SelectDeliveryAddressState extends State<SelectDeliveryAddress> {
   int selectedRadio;
   final _service = AddressService();
+  void _showErrorDialog() {
+    showDialog(
+        context: context,
+        builder: (BuildContext contex) {
+          return AlertDialog(
+            title: new Text(
+              "Error",
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+            ),
+            content: Text(
+              "Please Select a Delivery Address!",
+              style: TextStyle(
+                fontSize: 18,
+              ),
+            ),
+            actions: <Widget>[
+              FlatButton(
+                child: new Text(
+                  "OK",
+                  style: TextStyle(
+                      fontSize: 18,
+                      color: Colors.black,
+                      fontWeight: FontWeight.w600),
+                ),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+              ),
+            ],
+          );
+        });
+  }
 
   @override
   void initState() {
@@ -29,8 +62,6 @@ class _SelectDeliveryAddressState extends State<SelectDeliveryAddress> {
     print(selectedRadio);
     print(CartList.address.mobile);
   }
-
-  var delete;
 
   @override
   Widget build(BuildContext context) {
@@ -50,8 +81,12 @@ class _SelectDeliveryAddressState extends State<SelectDeliveryAddress> {
             child: RaisedButton(
               color: Color(0xffcdaa44),
               onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => PaymentMethod()));
+                if (CartList.address == null) {
+                  _showErrorDialog();
+                } else {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => PaymentMethod()));
+                }
               },
               child: Text("Select Payment Method",
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.w400)),
@@ -132,9 +167,7 @@ class _SelectDeliveryAddressState extends State<SelectDeliveryAddress> {
                           trailing: IconButton(
                               icon: Icon(Icons.delete),
                               onPressed: () {
-                                setState(() {
-                                  delete.remove();
-                                });
+                                _service.delete(snapshot.data[i]);
                               }),
                         ),
                         Divider(

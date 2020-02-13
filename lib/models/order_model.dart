@@ -1,28 +1,33 @@
 import '_model.dart';
 
 class OrderModel extends Model {
-  final String name;
-  final String customerId;
-  final String address;
-  final int totatlPrice;
+  String customerId;
+  String addressId;
+  String status;
+  String instruction;
+  String timeCreated;
+  int totatlPrice;
 
   OrderModel(
-      {int id, this.name, this.customerId, this.address, this.totatlPrice})
+      {int id, this.addressId, this.customerId, this.status, this.instruction, this.totatlPrice,this.timeCreated})
       : super(id: id);
 
   OrderModel.fromJson(Map<String, dynamic> json)
       : this(
             id: json['id'],
-            name: json['name'],
+            status: json['status'],
             customerId: json['customer_id'].toString(),
-            address: json['address'].toString(),
-            totatlPrice: json['total_price']);
+            addressId: json['address_id'].toString(),
+            totatlPrice: json['total_price'],
+            instruction: json['instruction'],
+            timeCreated: json['created_at']);
 
   @override
   Map<String, dynamic> toJson() => {
-        'name': name,
+        'status': status,
         'customer_id': customerId,
-        'address': address,
-        'total_price': totatlPrice
+        'address_id': addressId,
+        'total_price': totatlPrice,
+        'instruction':instruction
       };
 }

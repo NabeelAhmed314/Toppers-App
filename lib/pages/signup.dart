@@ -71,6 +71,7 @@ class _SignUpState extends State<SignUp> {
 
     CustomerModel signedCustomer = await widget._service.insert(customerModel);
 
+
     if (signedCustomer == null) {
       print("no sign in");
       _showErrorDialog();

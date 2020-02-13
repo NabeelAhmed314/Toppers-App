@@ -12,25 +12,56 @@ class CustomerService extends Service<CustomerModel> {
 
   Future<CustomerModel> insert(CustomerModel customerModel) async {
     var jsonData = jsonEncode(customerModel);
-    var response = await http.post(Uri.encodeFull("$apiUrl/register-customer"),
-    body: jsonData, headers: {"Content-Type": "application/json","Accept": "application/json"});
-    try{
+    print(jsonData);
+    print("$apiUrl/register-customer");
+    try {
+      var response = await http.post(
+          Uri.encodeFull("$apiUrl/register-customer"),
+          body: jsonData,
+          headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+          });
       var data = jsonDecode(response.body);
       return parse(data);
-    }catch(e){
+    } catch (e) {
       return null;
     }
   }
 
   Future<CustomerModel> login(CustomerModel customerModel) async {
     var jsonData = jsonEncode(customerModel);
-    var response = await http.post(Uri.encodeFull("$apiUrl/login-customer"),
-    body: jsonData, headers: {"Content-Type": "application/json","Accept": "application/json"});
-    try{
+    try {
+      print('waiting');
+      var response = await http.post(Uri.encodeFull("$apiUrl/login-customer"),
+          body: jsonData,
+          headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+          });
       var data = jsonDecode(response.body);
       print(parse(data).email);
       return parse(data);
-    }catch(e){
+    } catch (e) {
+      return null;
+    }
+  }
+
+  Future<CustomerModel> changePassword(customerModel,id) async {
+    var jsonData = jsonEncode(customerModel);
+    print(jsonData);
+    try {
+      print('waiting');
+      var response = await http.post(Uri.encodeFull("$apiUrl/change-customer-password/$id"),
+          body: jsonData,
+          headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+          });
+      var data = jsonDecode(response.body);
+      print(parse(data).email);
+      return parse(data);
+    } catch (e) {
       return null;
     }
   }

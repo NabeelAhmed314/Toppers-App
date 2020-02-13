@@ -14,16 +14,27 @@ class AddressService extends Service<AddressModel> {
     // print("Model=> " +addressModel.toString());
     var jsonData = jsonEncode(addressModel);
     var response = await http.post(Uri.encodeFull("$apiUrl/$route"),
-    body: jsonData, headers: {"Content-Type": "application/json","Accept": "application/json"});
-    try{
+        body: jsonData,
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        });
+    try {
       var data = jsonDecode(response.body);
       return parse(data);
-    }catch(e){
+    } catch (e) {
       return null;
     }
   }
 
+  void delete(AddressModel addressModel) async {
+    var id = addressModel.id;
+    print("id=>" + id.toString());
+    var response = await http.delete(
+        Uri.encodeFull("$apiUrl/$route/$id"),
+        headers: {"Content-Type": "application/json"});
+    print("Response=>" + response.body);
+  }
+
   String get route => "address";
 }
-
-

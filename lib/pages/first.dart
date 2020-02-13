@@ -79,18 +79,45 @@ class _FirstState extends State<First> {
             style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
           ),
         ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            print(CartList.orderItems.length);
-            if (CartList.orderItems.length == 0) {
-              _showErrorDialog();
-            } else {
-              Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => Cart()));
-            }
-          },
-          backgroundColor: Colors.red,
-          child: Icon(Icons.add_shopping_cart),
+        floatingActionButton: Stack(
+          children: <Widget>[
+            FloatingActionButton(
+              onPressed: () {
+                print(CartList.orderItems.length);
+                if (CartList.orderItems.length == 0) {
+                  _showErrorDialog();
+                } else {
+                  Navigator.push(
+                      context, MaterialPageRoute(builder: (context) => Cart()));
+                }
+              },
+              backgroundColor: Colors.red,
+              child: Icon(Icons.add_shopping_cart),
+            ),
+            Positioned(
+              right: 7,
+              top: 7,
+              child: Container(
+                padding: EdgeInsets.all(2),
+                decoration: new BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                constraints: BoxConstraints(
+                  minWidth: 14,
+                  minHeight: 14,
+                ),
+                child: Text(
+                  CartList.orderItems.length.toString(),
+                  style: TextStyle(
+                    color: Colors.red,
+                    fontSize: 12,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            )
+          ],
         ),
         drawer: Drawer(
           child: ListView(
@@ -109,6 +136,9 @@ class _FirstState extends State<First> {
                 ),
               ),
               ListTile(
+                onTap: () {
+                  Navigator.pop(context);
+                },
                 leading: Icon(
                   Icons.fastfood,
                   color: Colors.black,
@@ -124,8 +154,13 @@ class _FirstState extends State<First> {
               ),
               ListTile(
                 onTap: () {
-                  Navigator.push(
-                      context, MaterialPageRoute(builder: (context) => Cart()));
+                  if (CartList.orderItems.length == 0) {
+                    _showErrorDialog();
+                  } else {
+                    Navigator.pop(context);
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => Cart()));
+                  }
                 },
                 leading: Icon(
                   Icons.shopping_cart,
@@ -142,6 +177,7 @@ class _FirstState extends State<First> {
               ),
               ListTile(
                 onTap: () {
+                  Navigator.pop(context);
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) => AboutUS()));
                 },
@@ -160,6 +196,7 @@ class _FirstState extends State<First> {
               ),
               ListTile(
                 onTap: () {
+                  Navigator.pop(context);
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) => Account()));
                 },
@@ -178,6 +215,7 @@ class _FirstState extends State<First> {
               ),
               ListTile(
                 onTap: () {
+                  Navigator.pop(context);
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) => Notification2()));
                 },
@@ -301,11 +339,12 @@ class _FirstState extends State<First> {
                                       child: GestureDetector(
                                     onTap: () {
                                       Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) => Order(
-                                                  categoryModel:
-                                                      snapshot.data[i])));
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => Order(
+                                              categoryModel: snapshot.data[i]),
+                                        ),
+                                      );
                                     },
                                     child: Column(
                                       children: <Widget>[

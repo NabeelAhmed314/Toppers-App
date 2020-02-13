@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:toppers_pakistan/cart_list.dart';
 import 'package:toppers_pakistan/drawer/account/order_history.dart';
 import 'package:toppers_pakistan/models/local-data.dart';
+import 'package:toppers_pakistan/models/order_model.dart';
+import 'package:toppers_pakistan/services/order-item_service.dart';
+import 'package:toppers_pakistan/services/order_service.dart';
 
 class PlaceOrder extends StatefulWidget {
   @override
@@ -11,6 +14,40 @@ class PlaceOrder extends StatefulWidget {
 class _PlaceOrderState extends State<PlaceOrder> {
   int deliveryCharges = 80;
   int taxCharges = 0;
+
+  void _storeOrder() async {
+    final _service = OrderService();
+    final _serviceOrderItem = OrderItemService();
+
+    int totalPrice = CartList.totalPrice + deliveryCharges + taxCharges;
+
+    OrderModel order = new OrderModel();
+    order.customerId = LocalData.currentCustomer.id.toString();
+    order.addressId = CartList.address.id.toString();
+    order.totatlPrice = totalPrice;
+    order.instruction = CartList.instruction;
+
+    print(order.customerId);
+    OrderModel newOrder = await _service.insert(order);
+    print(newOrder.id);
+
+    for (var orderItem in CartList.orderItems) {
+      orderItem.orderId = newOrder.id.toString();
+
+      await _serviceOrderItem.insert(orderItem);
+    }
+
+    CartList.orderItems = new List();
+    CartList.address = null;
+    CartList.instruction = null;
+    CartList.totalPrice = null;
+
+    for (var i = 0; i < 5; i++) {
+      Navigator.pop(context);
+    }
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => OrderHistory()));
+  }
 
   void _placeorder() {
     showDialog(
@@ -28,7 +65,6 @@ class _PlaceOrderState extends State<PlaceOrder> {
               ),
             ),
             actions: <Widget>[
-              // usually buttons at the bottom of the dialog
               FlatButton(
                 child: new Text(
                   "OK",
@@ -38,8 +74,7 @@ class _PlaceOrderState extends State<PlaceOrder> {
                       fontWeight: FontWeight.w600),
                 ),
                 onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => OrderHistory()));
+                  _storeOrder();
                 },
               ),
             ],
@@ -147,9 +182,7 @@ class _PlaceOrderState extends State<PlaceOrder> {
                 child: RaisedButton(
                   color: Color(0xffCE862A),
                   onPressed: () {
-                    // _placeorder();
-                    print("Customer ID" + LocalData.currentCustomer.id.toString());
-                    
+                    _placeorder();
                   },
                   child: Text("Place Order",
                       style: TextStyle(
