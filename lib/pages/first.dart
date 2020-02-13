@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:flutter/services.dart';
 import 'package:toppers_pakistan/cart/cart.dart';
 import 'package:toppers_pakistan/cart_list.dart';
 import 'package:toppers_pakistan/drawer/about_us.dart';
@@ -60,13 +61,31 @@ class _FirstState extends State<First> {
         });
   }
 
+  Future<bool> _exitApp(BuildContext context) {
+    return showDialog(
+          context: context,
+          child: new AlertDialog(
+            title: new Text('Do you want to exit this application?'),
+            content: new Text('We hate to see you leave...'),
+            actions: <Widget>[
+              new FlatButton(
+                onPressed: () => Navigator.of(context).pop(false),
+                child: new Text('No'),
+              ),
+              new FlatButton(
+                onPressed: () => SystemNavigator.pop(),
+                child: new Text('Yes'),
+              ),
+            ],
+          ),
+        ) ??
+        false;
+  }
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: () async {
-        return Future.value(
-            false); //return a `Future` with false value so this route cant be popped or closed.
-      },
+      onWillPop: () => _exitApp(context),
       child: Scaffold(
         //  backgroundColor: Colors.black,
         appBar: AppBar(

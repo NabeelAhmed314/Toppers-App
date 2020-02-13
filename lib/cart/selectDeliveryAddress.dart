@@ -168,6 +168,7 @@ class _SelectDeliveryAddressState extends State<SelectDeliveryAddress> {
                               icon: Icon(Icons.delete),
                               onPressed: () {
                                 _service.delete(snapshot.data[i]);
+                                setState(() {});
                               }),
                         ),
                         Divider(

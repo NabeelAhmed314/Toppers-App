@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:toppers_pakistan/models/local-data.dart';
 import 'package:toppers_pakistan/pages/first.dart';
 import 'package:toppers_pakistan/pages/signin.dart';
 import 'package:toppers_pakistan/pages/signup.dart';
@@ -11,7 +12,9 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return 
+    LocalData.currentCustomer == null ? 
+    Scaffold(
       backgroundColor: Colors.black,
       body: Center(
         child: Column(
@@ -100,6 +103,7 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
       ),
-    );
+    ) : 
+    First();
   }
 }
