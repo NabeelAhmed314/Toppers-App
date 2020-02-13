@@ -4,12 +4,20 @@ import 'package:toppers_pakistan/cart/cart.dart';
 import 'package:toppers_pakistan/cart_list.dart';
 import 'package:toppers_pakistan/drawer/about_us.dart';
 import 'package:toppers_pakistan/drawer/account.dart';
+import 'package:toppers_pakistan/models/carosel_model.dart';
+import 'package:toppers_pakistan/models/local-data.dart';
+import 'package:toppers_pakistan/pages/carosalpage.dart';
+import 'package:toppers_pakistan/pages/custom-drawer-guest.dart';
+import 'package:toppers_pakistan/pages/custom-drawer.dart';
+import 'package:toppers_pakistan/services/carosel_service.dart';
 import 'package:toppers_pakistan/services/category_service.dart';
 import 'package:toppers_pakistan/models/category_model.dart';
 
 import 'package:toppers_pakistan/drawer/notification.dart';
 import 'package:toppers_pakistan/pages/model.dart';
 import 'package:toppers_pakistan/pages/order.dart';
+
+import '../simple-future-builder.dart';
 
 class First extends StatefulWidget {
   @override
@@ -18,16 +26,6 @@ class First extends StatefulWidget {
 
 class _FirstState extends State<First> {
   final _service = CategoryService();
-  int _current = 0;
-  List imgList = [
-    'https://i0.wp.com/cdn-prod.medicalnewstoday.com/content/images/articles/322/322284/berries-are-good-food-for-high-blood-pressure.jpg?w=1155&h=1541',
-    'https://www.washingtonpost.com/wp-apps/imrs.php?src=https://arc-anglerfish-washpost-prod-washpost.s3.amazonaws.com/public/2KL6JYQYH4I6REYMIWBYVUGXPI.jpg&w=767',
-    'https://i.ytimg.com/vi/9k7PJoNAXkk/maxresdefault.jpg',
-    'https://www.diabetes.org/sites/default/files/styles/paragraph_50_50/public/2019-06/understandingcarbs-desktop-5050.jpg',
-    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRl69R5eUP6NqWuAwfeax-ogL1Woq2DGmpykQ8BHZB_3WXO3Y-z&s',
-    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTDSRzxORgtQ5KJ2UpQZSI1DnpGhvHxl4rhF-c3NH0X7pySIq61&s,',
-    'https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500'
-  ];
 
   void _showErrorDialog() {
     showDialog(
@@ -87,8 +85,12 @@ class _FirstState extends State<First> {
                 if (CartList.orderItems.length == 0) {
                   _showErrorDialog();
                 } else {
-                  Navigator.push(
-                      context, MaterialPageRoute(builder: (context) => Cart()));
+                  if (LocalData.currentCustomer == null) {
+                    _showErrorDialog();
+                  } else {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => Cart()));
+                  }
                 }
               },
               backgroundColor: Colors.red,
@@ -108,7 +110,9 @@ class _FirstState extends State<First> {
                   minHeight: 14,
                 ),
                 child: Text(
-                  CartList.orderItems.length.toString(),
+                  CartList.orderItems == null
+                      ? "0"
+                      : CartList.orderItems.length.toString(),
                   style: TextStyle(
                     color: Colors.red,
                     fontSize: 12,
@@ -119,179 +123,15 @@ class _FirstState extends State<First> {
             )
           ],
         ),
-        drawer: Drawer(
-          child: ListView(
-            children: <Widget>[
-              Container(
-                color: Colors.red,
-                height: MediaQuery.of(context).size.height / 15,
-                child: Center(
-                  child: Text(
-                    "MENU",
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18),
-                  ),
-                ),
-              ),
-              ListTile(
-                onTap: () {
-                  Navigator.pop(context);
-                },
-                leading: Icon(
-                  Icons.fastfood,
-                  color: Colors.black,
-                ),
-                title: Text(
-                  "MENU",
-                  style: TextStyle(color: Colors.black),
-                ),
-              ),
-              Divider(
-                color: Colors.black,
-                height: 0,
-              ),
-              ListTile(
-                onTap: () {
-                  if (CartList.orderItems.length == 0) {
-                    _showErrorDialog();
-                  } else {
-                    Navigator.pop(context);
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => Cart()));
-                  }
-                },
-                leading: Icon(
-                  Icons.shopping_cart,
-                  color: Colors.black,
-                ),
-                title: Text(
-                  "MY BASKET",
-                  style: TextStyle(color: Colors.black),
-                ),
-              ),
-              Divider(
-                color: Colors.black,
-                height: 0,
-              ),
-              ListTile(
-                onTap: () {
-                  Navigator.pop(context);
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => AboutUS()));
-                },
-                leading: Icon(
-                  Icons.location_on,
-                  color: Colors.black,
-                ),
-                title: Text(
-                  "ABOUT US",
-                  style: TextStyle(color: Colors.black),
-                ),
-              ),
-              Divider(
-                color: Colors.black,
-                height: 0,
-              ),
-              ListTile(
-                onTap: () {
-                  Navigator.pop(context);
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => Account()));
-                },
-                leading: Icon(
-                  Icons.person,
-                  color: Colors.black,
-                ),
-                title: Text(
-                  "MY ACCOUNT",
-                  style: TextStyle(color: Colors.black),
-                ),
-              ),
-              Divider(
-                color: Colors.black,
-                height: 0,
-              ),
-              ListTile(
-                onTap: () {
-                  Navigator.pop(context);
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => Notification2()));
-                },
-                leading: Icon(
-                  Icons.notifications,
-                  color: Colors.black,
-                ),
-                title: Text(
-                  "NOTIFICATIONS",
-                  style: TextStyle(color: Colors.black),
-                ),
-              ),
-              Divider(
-                color: Colors.black,
-                height: 0,
-              ),
-              ListTile(
-                onTap: () {
-                  Navigator.pop(context);
-                  Navigator.pop(context);
-                },
-                leading: Icon(
-                  Icons.devices_other,
-                  color: Colors.black,
-                ),
-                title: Text(
-                  "SIGN OUT",
-                  style: TextStyle(color: Colors.black),
-                ),
-              ),
-              Divider(
-                color: Colors.black,
-                height: 0,
-              ),
-            ],
-          ),
-        ),
+        drawer: LocalData.currentCustomer == null
+            ? CustomDrawerGuest()
+            : CustomDrawer(),
         body: Container(
           child: Column(
               // mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                // CarouselSlider(
-                //   height: 200.0,
-                //   initialPage: 0,
-                //   enlargeCenterPage: true,
-                //   autoPlay: true,
-                //   reverse: false,
-                //   enableInfiniteScroll: true,
-                //   autoPlayInterval: Duration(seconds: 3),
-                //   autoPlayAnimationDuration: Duration(milliseconds: 2000),
-                //   pauseAutoPlayOnTouch: Duration(seconds: 5),
-                //   scrollDirection: Axis.horizontal,
-                //   onPageChanged: (index) {
-                //     setState(() {
-                //       _current = index;
-                //     });
-                //   },
-                //   items: imgList.map((imgUrl) {
-                //     return Builder(
-                //       builder: (BuildContext context) {
-                //         return Container(
-                //           width: MediaQuery.of(context).size.width,
-                //           margin: EdgeInsets.symmetric(horizontal: 10.0),
-                //           decoration: BoxDecoration(
-                //             color: Colors.green,
-                //           ),
-                //           child: Image.network(
-                //             imgUrl,
-                //             fit: BoxFit.fill,
-                //           ),
-                //         );
-                //       },
-                //     );
-                //   }).toList(),
-                // ),
+                Carosal(),
                 SizedBox(
                   height: 10,
                 ),
@@ -307,6 +147,9 @@ class _FirstState extends State<First> {
                         fontWeight: FontWeight.w600,
                         fontSize: 20),
                   )),
+                ),
+                SizedBox(
+                  height: 10,
                 ),
                 Expanded(
                   child: FutureBuilder(

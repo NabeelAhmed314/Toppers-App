@@ -171,7 +171,7 @@ class _SignUpState extends State<SignUp> {
                     ),
                   ),
                   prefixIcon: Icon(
-                    Icons.person,
+                    Icons.mail,
                     color: Colors.white,
                   ),
                   border: InputBorder.none,
@@ -210,7 +210,7 @@ class _SignUpState extends State<SignUp> {
                     ),
                   ),
                   prefixIcon: Icon(
-                    Icons.person,
+                    Icons.phone,
                     color: Colors.white,
                   ),
                   border: InputBorder.none,
@@ -249,7 +249,7 @@ class _SignUpState extends State<SignUp> {
                     ),
                   ),
                   prefixIcon: Icon(
-                    Icons.person,
+                    Icons.lock,
                     color: Colors.white,
                   ),
                   border: InputBorder.none,
@@ -288,7 +288,7 @@ class _SignUpState extends State<SignUp> {
                     ),
                   ),
                   prefixIcon: Icon(
-                    Icons.person,
+                    Icons.lock,
                     color: Colors.white,
                   ),
                   border: InputBorder.none,

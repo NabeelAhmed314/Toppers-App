@@ -57,7 +57,6 @@ class _AddressState extends State<Address> {
                         onPressed: () {
                           _service.delete(snapshot.data[i]);
                           setState(() {});
-                          Navigator.pop(context);
                         }),
                   ),
                   Divider(
